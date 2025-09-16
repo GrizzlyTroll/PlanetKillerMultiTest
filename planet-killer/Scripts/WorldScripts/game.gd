@@ -35,6 +35,9 @@ func _ready():
 	# Initialize multiplayer system
 	_setup_multiplayer()
 	
+	# Debug: Check multiplayer state
+	_debug_multiplayer_state()
+	
 	# Set up timer sync
 	_setup_timer_sync()
 	
@@ -134,6 +137,22 @@ func _setup_multiplayer() -> void:
 	# Set up multiplayer signals
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+	
+	# Check if we're already in a multiplayer session
+	if is_multiplayer_active():
+		print("Game: Already in multiplayer session, setting up players")
+		if multiplayer.is_server():
+			print("Game: We are the server, setting up existing player")
+			_setup_existing_player()
+		else:
+			print("Game: We are a client, requesting player spawns")
+			# Remove existing player and request spawns
+			var existing_player = $Player
+			if existing_player:
+				existing_player.queue_free()
+				print("Game: Removed existing player, requesting spawns")
+			# Request all players from server
+			rpc_id(1, "_request_player_spawns")
 
 func _on_server_created() -> void:
 	print("Game: Server created successfully")
@@ -317,6 +336,17 @@ func _set_player_color(player: Node, peer_id: int):
 	if sprite:
 		sprite.modulate = colors[color_index]
 		print("Game: Set player ", peer_id, " color to: ", colors[color_index])
+
+func _debug_multiplayer_state():
+	# Debug function to check multiplayer state when game starts
+	print("=== MULTIPLAYER STATE DEBUG ===")
+	print("Multiplayer active: ", is_multiplayer_active())
+	print("Local multiplayer ID: ", multiplayer.get_unique_id())
+	print("Is server: ", multiplayer.is_server())
+	print("Is client: ", multiplayer.is_client())
+	print("Number of peers: ", multiplayer.get_peers().size())
+	print("Existing player name: ", $Player.name if $Player else "No player found")
+	print("=== END MULTIPLAYER DEBUG ===")
 
 func debug_player_authorities():
 	# Debug function to check all player authorities

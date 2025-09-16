@@ -10,3 +10,5 @@ res://Surprise/Scenes/high_level_ui.tscn
 res://Scenes/Lobby.tscn
 res://Scripts/PlayerScripts/player.gd
 res://Scripts/WorldScripts/game.gd
+res://Scenes/world.tscn
+res://Scripts/WorldScripts/grass_script.gd

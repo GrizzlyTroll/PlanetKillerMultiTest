@@ -17,7 +17,6 @@ func generate_map() -> void:
 				set_cell(Vector2i(-x,y),2,Vector2(rand_grass,0))
 			else:
 				var noise_value = fnl.get_noise_2d(x,y)
-				print(noise_value)
 				if noise_value > -0.5 and noise_value < -0.3:
 					set_cell(Vector2i(x,y),1,Vector2(0,0),0)
 					set_cell(Vector2i(-x,y),1,Vector2(0,0),0)
