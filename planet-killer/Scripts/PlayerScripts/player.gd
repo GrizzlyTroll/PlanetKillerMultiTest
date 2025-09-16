@@ -83,10 +83,14 @@ func _enter_tree() -> void:
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())
 		print("Player: Set authority to ", name.to_int(), " for player named: ", name)
+		# Set player color based on ID
+		_set_player_color(name.to_int())
 	else:
 		# Fallback for non-numeric names
 		set_multiplayer_authority(1)
 		print("Player: Set fallback authority to 1 for player named: ", name)
+		# Set default color for non-numeric names
+		_set_player_color(1)
 
 func _ready() -> void:
 	player_inventory = preload("res://inventory/inventory.gd").new()
@@ -485,6 +489,32 @@ func take_damage(damage: float, source_position: Vector2 = Vector2.ZERO) -> void
 	
 	# Sync damage to other players
 	rpc("_sync_damage", damage, source_position)
+
+func _set_player_color(peer_id: int):
+	# Set a unique color for each player to distinguish them
+	var colors = [
+		Color.WHITE,      # Player 1 (server) - default white
+		Color.RED,        # Player 2 - red
+		Color.BLUE,       # Player 3 - blue
+		Color.GREEN,      # Player 4 - green
+		Color.YELLOW,     # Player 5 - yellow
+		Color.MAGENTA,    # Player 6 - magenta
+		Color.CYAN,       # Player 7 - cyan
+		Color.ORANGE      # Player 8 - orange
+	]
+	
+	var color_index = (peer_id - 1) % colors.size()
+	print("Player: Setting color for player ", peer_id, " (color index: ", color_index, ")")
+	
+	# Wait for the sprite to be ready
+	await get_tree().process_frame
+	
+	if sprite:
+		sprite.modulate = colors[color_index]
+		print("Player: Successfully set player ", peer_id, " color to: ", colors[color_index])
+		print("Player: Sprite modulate is now: ", sprite.modulate)
+	else:
+		print("Player: ERROR - Sprite not found! Available nodes: ", get_children())
 
 @rpc("any_peer", "reliable")
 func _sync_damage(damage: float, source_position: Vector2) -> void:
