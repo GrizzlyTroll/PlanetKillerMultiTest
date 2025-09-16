@@ -133,6 +133,8 @@ func _setup_multiplayer() -> void:
 	# Configure MultiplayerSpawner
 	if multiplayer_spawner:
 		print("Game: MultiplayerSpawner found and ready")
+		print("Game: Spawn path: ", multiplayer_spawner.spawn_path)
+		print("Game: Network player scene: ", multiplayer_spawner.network_player)
 	else:
 		print("Game: Warning - MultiplayerSpawner not found!")
 	
@@ -147,14 +149,19 @@ func _spawn_all_players():
 	if multiplayer.is_server():
 		# Server spawns all players
 		print("Game: Server spawning all players")
+		print("Game: Server local ID: ", multiplayer.get_unique_id())
+		print("Game: Connected peers: ", multiplayer.get_peers())
 		# Spawn server player (ID 1)
+		print("Game: Spawning server player (ID: 1)")
 		multiplayer_spawner.spawn_player(1)
 		# Spawn all client players
 		for peer_id in multiplayer.get_peers():
+			print("Game: Spawning client player (ID: ", peer_id, ")")
 			multiplayer_spawner.spawn_player(peer_id)
 	else:
 		# Client requests server to spawn all players
 		print("Game: Client requesting server to spawn all players")
+		print("Game: Client local ID: ", multiplayer.get_unique_id())
 		rpc_id(1, "_request_player_spawns")
 
 func _on_server_created() -> void:
