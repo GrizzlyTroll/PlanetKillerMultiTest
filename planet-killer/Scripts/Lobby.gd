@@ -49,6 +49,7 @@ func _ready():
 	network_handler.server_discovered.connect(_on_server_discovered)
 	network_handler.servers_updated.connect(_on_servers_updated)
 	
+	
 	# Connect UI signals with null checks
 	if ready_button:
 		ready_button.pressed.connect(_on_ready_pressed)
@@ -86,6 +87,7 @@ func _ready():
 	
 	# Disable the high_level_ui script's signal connections to prevent conflicts
 	_disable_ui_script_signals()
+
 
 func _verify_ui_elements():
 	print("Verifying UI elements:")

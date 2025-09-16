@@ -12,3 +12,4 @@ res://Scripts/PlayerScripts/player.gd
 res://Scripts/WorldScripts/game.gd
 res://Scenes/world.tscn
 res://Scripts/WorldScripts/grass_script.gd
+res://Scripts/Lobby.gd
