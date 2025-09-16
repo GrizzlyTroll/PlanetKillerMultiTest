@@ -43,12 +43,8 @@ func _spawn_player(id: int) -> Node:
 	
 	print("MultiplayerSpawner: Spawning player with ID: ", id, " at position: ", player.position)
 	
-	# Add the player to the spawn path so it gets synchronized
-	var spawn_node = get_node(spawn_path)
-	if spawn_node:
-		spawn_node.add_child(player)
-		print("MultiplayerSpawner: Player added to spawn node for synchronization")
-	else:
-		print("MultiplayerSpawner: Warning - spawn node not found!")
+	# Don't add the player to the scene tree here - let MultiplayerSpawner handle it
+	# The MultiplayerSpawner will automatically add the returned player to the spawn_path
+	print("MultiplayerSpawner: Returning player for MultiplayerSpawner to handle")
 	
 	return player

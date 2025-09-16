@@ -23,6 +23,7 @@ extends CharacterBody2D
 
 # --- Ui Variables
 @onready var sprite:AnimatedSprite2D = $AnimatedSprite2D
+@onready var camera: Camera2D = $Camera2D
 @onready var label = $Camera2D/Label
 @onready var health_ui = $HealthBarUI
 @onready var pickup_area = $PickupArea
@@ -97,6 +98,15 @@ func _ready() -> void:
 	
 	multiplayer_menu.hide()
 	# Initialize inventory properly
+	
+	# Set camera to follow only the local player
+	if is_multiplayer_authority():
+		camera.enabled = true
+		camera.make_current()
+		print("Player: Camera enabled for local player: ", name)
+	else:
+		camera.enabled = false
+		print("Player: Camera disabled for remote player: ", name)
 	
 	
 	# Make sure items array exists

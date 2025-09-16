@@ -144,13 +144,22 @@ func _setup_multiplayer() -> void:
 	
 	# Check if we're already in a multiplayer session
 	if is_multiplayer_active():
-		print("Game: Already in multiplayer session, removing existing player and waiting for client request")
+		print("Game: Already in multiplayer session, removing existing player and spawning for existing peers")
 		# Remove any existing player nodes to prevent conflicts
 		var existing_player = get_node_or_null("Player")
 		if existing_player:
 			print("Game: Removing existing Player node")
 			existing_player.queue_free()
-		# Don't spawn here - let the client request trigger spawning
+		
+		# Spawn players for all existing peers (including server)
+		if multiplayer.is_server():
+			print("Game: Spawning players for existing peers")
+			# Spawn server player
+			multiplayer_spawner.spawn(1)
+			# Spawn players for all connected clients
+			for peer_id in multiplayer.get_peers():
+				print("Game: Spawning player for existing peer: ", peer_id)
+				multiplayer_spawner.spawn(peer_id)
 
 
 func _spawn_all_players():
@@ -195,12 +204,8 @@ func _on_server_joined() -> void:
 		# Wait for the player to be fully removed
 		await get_tree().process_frame
 	
-	# Request the server to spawn all players (including us)
-	if not multiplayer.is_server():
-		print("Game: Client requesting player spawns from server")
-		rpc_id(1, "_request_player_spawns")
-	else:
-		print("Game: Server should not be calling _on_server_joined")
+	# The server should automatically spawn players when the game scene loads
+	print("Game: Client joined, waiting for server to spawn players automatically")
 
 func _on_server_left() -> void:
 	print("Game: Disconnected from server")
@@ -215,20 +220,26 @@ func _on_peer_connected(id: int) -> void:
 	# Server spawns a player for the new client using MultiplayerSpawner
 	if multiplayer.is_server():
 		print("Game: Server spawning player for new client: ", id)
-		multiplayer_spawner.spawn_player(id)
+		multiplayer_spawner.spawn(id)
 
 func _on_peer_disconnected(id: int) -> void:
 	print("Game: Peer disconnected: ", id)
-	# Remove the disconnected player using MultiplayerSpawner
+	# Remove the disconnected player
 	if multiplayer.is_server():
 		print("Game: Server removing player: ", id)
-		multiplayer_spawner.despawn(id)
+		# Find and remove the player node
+		var players_node = $Players
+		var player_node = players_node.get_node_or_null(str(id))
+		if player_node:
+			player_node.queue_free()
+			print("Game: Server removed player: ", id)
 	else:
 		# Client removes the player locally
-		var player_node = get_node_or_null(str(id))
+		var players_node = $Players
+		var player_node = players_node.get_node_or_null(str(id))
 		if player_node:
-			print("Game: Removing player node from client: ", str(id))
 			player_node.queue_free()
+			print("Game: Client removed player: ", id)
 		else:
 			print("Game: Player node not found on client for ID: ", str(id))
 
