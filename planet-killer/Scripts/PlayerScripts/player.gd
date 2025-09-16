@@ -82,9 +82,11 @@ func _enter_tree() -> void:
 	# Set multiplayer authority based on the player's unique ID
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())
+		print("Player: Set authority to ", name.to_int(), " for player named: ", name)
 	else:
 		# Fallback for non-numeric names
 		set_multiplayer_authority(1)
+		print("Player: Set fallback authority to 1 for player named: ", name)
 
 func _ready() -> void:
 	player_inventory = preload("res://inventory/inventory.gd").new()
@@ -314,6 +316,10 @@ func _physics_process(delta: float) -> void:
 		gravity_component.handle_gravity(self, delta)
 		move_and_slide()
 		return
+	
+	# Debug: Only log occasionally to avoid spam
+	if Engine.get_process_frames() % 60 == 0:  # Log every 60 frames (about once per second)
+		print("Player: ", name, " is processing input (authority: ", get_multiplayer_authority(), ")")
 
 	if Input.is_action_pressed("MultiplayerMenu"): multiplayer_menu.show()
 	

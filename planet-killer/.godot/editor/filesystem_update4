@@ -8,5 +8,5 @@ res://Scenes/PlayerStuff/Player.tscn
 res://Surprise/Scenes/high_level_example.tscn
 res://Surprise/Scenes/high_level_ui.tscn
 res://Scenes/Lobby.tscn
-res://Scripts/Lobby.gd
+res://Scripts/PlayerScripts/player.gd
 res://Scripts/WorldScripts/game.gd

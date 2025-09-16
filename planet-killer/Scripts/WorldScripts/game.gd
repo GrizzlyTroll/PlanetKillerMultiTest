@@ -147,6 +147,8 @@ func _on_server_joined() -> void:
 	if existing_player:
 		existing_player.queue_free()
 		print("Game: Removed existing player, spawning our own player")
+		# Wait for the player to be fully removed before spawning new one
+		await get_tree().process_frame
 	
 	# Spawn our own player as a client
 	_spawn_local_player()
@@ -193,6 +195,10 @@ func _spawn_local_player() -> void:
 	player.position = Vector2(100 + (multiplayer.get_unique_id() * 50), 100)  # Offset spawn positions
 	add_child(player)
 	print("Game: Spawned local player with ID: ", player.name, " at position: ", player.position)
+	print("Game: Player multiplayer authority: ", player.get_multiplayer_authority())
+	print("Game: Local multiplayer ID: ", multiplayer.get_unique_id())
+	print("Game: Is server: ", multiplayer.is_server())
+	print("Game: Is client: ", multiplayer.is_client())
 
 func _spawn_remote_player(peer_id: int) -> void:
 	# This is called by the server when a client connects
