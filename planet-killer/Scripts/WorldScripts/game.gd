@@ -135,18 +135,34 @@ func _setup_multiplayer() -> void:
 		print("Game: MultiplayerSpawner found and ready")
 		print("Game: Spawn path: ", multiplayer_spawner.spawn_path)
 		print("Game: Network player scene: ", multiplayer_spawner.network_player)
+		
+		# Set the spawn function to use our custom spawner
+		multiplayer_spawner.spawn_function = _spawn_player
+		print("Game: Set spawn function to _spawn_player")
 	else:
 		print("Game: Warning - MultiplayerSpawner not found!")
 	
 	# Check if we're already in a multiplayer session
 	if is_multiplayer_active():
-		print("Game: Already in multiplayer session, spawning players")
-		_spawn_all_players()
+		print("Game: Already in multiplayer session, removing existing player and waiting for client request")
+		# Remove any existing player nodes to prevent conflicts
+		var existing_player = get_node_or_null("Player")
+		if existing_player:
+			print("Game: Removing existing Player node")
+			existing_player.queue_free()
+		# Don't spawn here - let the client request trigger spawning
 
 
 func _spawn_all_players():
 	# Spawn all connected players
 	if multiplayer.is_server():
+		# Remove any existing players first
+		var existing_player = get_node_or_null("Player")
+		if existing_player:
+			print("Game: Removing existing player before spawning")
+			existing_player.queue_free()
+			await get_tree().process_frame
+		
 		# Server spawns all players
 		print("Game: Server spawning all players")
 		print("Game: Server local ID: ", multiplayer.get_unique_id())
@@ -255,14 +271,30 @@ func _request_player_spawns():
 		var sender_id = multiplayer.get_remote_sender_id()
 		print("Game: Client ", sender_id, " requested player spawns")
 		
-		# Use MultiplayerSpawner to spawn all players
-		print("Game: Server spawning all players for client using MultiplayerSpawner")
-		# Spawn server player (ID 1)
-		multiplayer_spawner.spawn_player(1)
-		# Spawn all other connected players
-		for peer_id in multiplayer.get_peers():
-			multiplayer_spawner.spawn_player(peer_id)
+		# The MultiplayerSpawner should handle spawning automatically
+		# Just spawn the server player if it doesn't exist
+		var players_node = $Players
+		var existing_players = players_node.get_children()
+		var player_ids = []
+		for player in existing_players:
+			if player.name.is_valid_int():
+				player_ids.append(player.name.to_int())
+		
+		print("Game: Existing player IDs: ", player_ids)
+		
+		# Only spawn server player if it doesn't exist
+		if not player_ids.has(1):
+			print("Game: Spawning server player (ID: 1)")
+			multiplayer_spawner.spawn(1)
+		
+		# The client player should be spawned automatically by _on_peer_connected
+		print("Game: Client players should be spawned automatically by MultiplayerSpawner")
 
+
+func _spawn_player(id: int) -> Node:
+	# This function is called by the MultiplayerSpawner
+	print("Game: _spawn_player called with ID: ", id)
+	return multiplayer_spawner._spawn_player(id)
 
 func is_multiplayer_active() -> bool:
 	return multiplayer.multiplayer_peer != null

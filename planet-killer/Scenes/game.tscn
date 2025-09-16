@@ -1,7 +1,6 @@
-[gd_scene load_steps=38 format=4 uid="uid://7uwgbujcd4m6"]
+[gd_scene load_steps=36 format=4 uid="uid://7uwgbujcd4m6"]
 
 [ext_resource type="Script" uid="uid://tq8a0iyp6gpk" path="res://Scripts/WorldScripts/game.gd" id="1_qxrlw"]
-[ext_resource type="PackedScene" uid="uid://cw8ndyn7x0jtw" path="res://Scenes/PlayerStuff/Player.tscn" id="2_wrm1d"]
 [ext_resource type="Texture2D" uid="uid://b0427unq8od5y" path="res://Assets/Tileset/flowers/flowers.png" id="5_cwurv"]
 [ext_resource type="Texture2D" uid="uid://256pxqu1i77v" path="res://Assets/Tileset/Surface/OAKtree2.png" id="5_tgy6u"]
 [ext_resource type="PackedScene" uid="uid://bl0byhboiojqh" path="res://Scenes/Enemies/Worm.tscn" id="6_i6g32"]
@@ -10,7 +9,6 @@
 [ext_resource type="Script" uid="uid://dj5igu5kldhk8" path="res://Scripts/BreakingScripts/tree.gd" id="10_7nbq1"]
 [ext_resource type="Texture2D" uid="uid://c2rhkth6kp5pk" path="res://Assets/Tileset/Surface/GraveYard.png" id="14_ewbju"]
 [ext_resource type="Shader" uid="uid://dcefycacvxxrw" path="res://Scenes/Clouds.gdshader" id="15_85qyi"]
-[ext_resource type="PackedScene" uid="uid://dqqlpel4u8gc7" path="res://Scenes/Equipment/ray_gun.tscn" id="15_nnt18"]
 [ext_resource type="PackedScene" uid="uid://2qevma3evnjt" path="res://Scenes/the_void.tscn" id="16_iivbl"]
 [ext_resource type="PackedScene" uid="uid://c436dqvwq1vsu" path="res://Scenes/PlayerStuff/droppable_item.tscn" id="17_exi56"]
 [ext_resource type="Resource" uid="uid://djixki04858m3" path="res://Assets/items/SpeedPotion.tres" id="18_7t8sx"]
@@ -612,10 +610,6 @@ item_data = ExtResource("18_7t8sx")
 [node name="DroppableItem" parent="World" instance=ExtResource("17_exi56")]
 position = Vector2(345, 157)
 item_data = ExtResource("18_exi56")
-
-[node name="Player" parent="." instance=ExtResource("2_wrm1d")]
-
-[node name="RayGun" parent="Player" instance=ExtResource("15_nnt18")]
 
 [node name="MobTimerWaveBreakLabel" type="Label" parent="."]
 unique_name_in_owner = true
