@@ -142,16 +142,17 @@ func _on_server_created() -> void:
 
 func _on_server_joined() -> void:
 	print("Game: Successfully joined server")
-	# Remove the existing player and spawn our own player
+	# Remove the existing player - the server will spawn all players
 	var existing_player = $Player
 	if existing_player:
 		existing_player.queue_free()
-		print("Game: Removed existing player, spawning our own player")
-		# Wait for the player to be fully removed before spawning new one
+		print("Game: Removed existing player, waiting for server to spawn all players")
+		# Wait for the player to be fully removed
 		await get_tree().process_frame
 	
-	# Spawn our own player as a client
-	_spawn_local_player()
+	# Request the server to spawn all players (including us)
+	if not multiplayer.is_server():
+		rpc_id(1, "_request_player_spawns")
 
 func _on_server_left() -> void:
 	print("Game: Disconnected from server")
@@ -163,18 +164,40 @@ func _on_connection_failed() -> void:
 
 func _on_peer_connected(id: int) -> void:
 	print("Game: Peer connected: ", id)
-	# Don't spawn players for clients - they spawn their own
-	# The server just needs to know about the connection
+	# Server spawns a player for the new client
+	if multiplayer.is_server():
+		_spawn_remote_player(id)
+		# Also spawn the new player for all existing clients
+		_spawn_player_for_all_clients(id)
 
 func _on_peer_disconnected(id: int) -> void:
 	print("Game: Peer disconnected: ", id)
-	# Remove the disconnected player
-	var player_node = get_node_or_null(str(id))
-	if player_node:
-		print("Game: Removing player node: ", str(id))
-		player_node.queue_free()
+	# Remove the disconnected player from all clients
+	if multiplayer.is_server():
+		# Remove from server
+		var player_node = get_node_or_null(str(id))
+		if player_node:
+			print("Game: Removing player node from server: ", str(id))
+			player_node.queue_free()
+		
+		# Tell all clients to remove this player
+		for client_id in multiplayer.get_peers():
+			rpc_id(client_id, "_remove_player_instance", id)
 	else:
-		print("Game: Player node not found for ID: ", id)
+		# Client removes the player locally
+		var player_node = get_node_or_null(str(id))
+		if player_node:
+			print("Game: Removing player node from client: ", str(id))
+			player_node.queue_free()
+
+@rpc("any_peer", "reliable")
+func _remove_player_instance(peer_id: int):
+	# Remove a player instance
+	if not multiplayer.is_server():  # Only clients should receive this
+		var player_node = get_node_or_null(str(peer_id))
+		if player_node:
+			print("Game: Client removing player instance: ", peer_id)
+			player_node.queue_free()
 
 func _setup_existing_player() -> void:
 	# Set up the existing player for multiplayer (server only)
@@ -207,6 +230,39 @@ func _spawn_remote_player(peer_id: int) -> void:
 	player.name = str(peer_id)
 	player.position = Vector2(100 + (peer_id * 50), 100)  # Offset spawn positions
 	add_child(player)
+	print("Game: Server spawned player for peer: ", peer_id)
+
+func _spawn_player_for_all_clients(peer_id: int) -> void:
+	# Spawn the new player on all existing clients
+	for client_id in multiplayer.get_peers():
+		if client_id != peer_id:  # Don't send to the new client (they'll get it via _request_player_spawns)
+			rpc_id(client_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 50), 100))
+
+@rpc("any_peer", "reliable")
+func _request_player_spawns():
+	# Client requests all current players to be spawned
+	if multiplayer.is_server():
+		var sender_id = multiplayer.get_remote_sender_id()
+		print("Game: Client ", sender_id, " requested player spawns")
+		
+		# Spawn all existing players for the requesting client
+		for peer_id in multiplayer.get_peers():
+			if peer_id != sender_id:  # Don't spawn the requesting client's player
+				rpc_id(sender_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 50), 100))
+		
+		# Spawn the requesting client's player for all other clients
+		_spawn_player_for_all_clients(sender_id)
+
+@rpc("any_peer", "reliable")
+func _spawn_player_instance(peer_id: int, position: Vector2):
+	# Spawn a player instance for a specific peer
+	if not multiplayer.is_server():  # Only clients should receive this
+		var player_scene = preload("res://Scenes/PlayerStuff/Player.tscn")
+		var player = player_scene.instantiate()
+		player.name = str(peer_id)
+		player.position = position
+		add_child(player)
+		print("Game: Client spawned player instance for peer: ", peer_id, " at position: ", position)
 
 func is_multiplayer_active() -> bool:
 	return multiplayer.multiplayer_peer != null
