@@ -246,7 +246,7 @@ func _spawn_local_player() -> void:
 	print("Game: Player multiplayer authority: ", player.get_multiplayer_authority())
 	print("Game: Local multiplayer ID: ", multiplayer.get_unique_id())
 	print("Game: Is server: ", multiplayer.is_server())
-	print("Game: Is client: ", multiplayer.is_client())
+	print("Game: Is client: ", (is_multiplayer_active() and not multiplayer.is_server()))
 
 func _spawn_remote_player(peer_id: int) -> void:
 	# This is called by the server when a client connects
@@ -343,7 +343,7 @@ func _debug_multiplayer_state():
 	print("Multiplayer active: ", is_multiplayer_active())
 	print("Local multiplayer ID: ", multiplayer.get_unique_id())
 	print("Is server: ", multiplayer.is_server())
-	print("Is client: ", multiplayer.is_client())
+	print("Is client: ", (is_multiplayer_active() and not multiplayer.is_server()))
 	print("Number of peers: ", multiplayer.get_peers().size())
 	print("Existing player name: ", $Player.name if $Player else "No player found")
 	print("=== END MULTIPLAYER DEBUG ===")
@@ -353,7 +353,7 @@ func debug_player_authorities():
 	print("=== PLAYER AUTHORITY DEBUG ===")
 	print("Local multiplayer ID: ", multiplayer.get_unique_id())
 	print("Is server: ", multiplayer.is_server())
-	print("Is client: ", multiplayer.is_client())
+	print("Is client: ", (is_multiplayer_active() and not multiplayer.is_server()))
 	
 	for child in get_children():
 		if child.name.is_valid_int():
