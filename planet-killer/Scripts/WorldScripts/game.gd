@@ -142,11 +142,14 @@ func _on_server_created() -> void:
 
 func _on_server_joined() -> void:
 	print("Game: Successfully joined server")
-	# Remove the existing player since the server will spawn us
+	# Remove the existing player and spawn our own player
 	var existing_player = $Player
 	if existing_player:
 		existing_player.queue_free()
-		print("Game: Removed existing player, waiting for server to spawn us")
+		print("Game: Removed existing player, spawning our own player")
+	
+	# Spawn our own player as a client
+	_spawn_local_player()
 
 func _on_server_left() -> void:
 	print("Game: Disconnected from server")
@@ -158,9 +161,8 @@ func _on_connection_failed() -> void:
 
 func _on_peer_connected(id: int) -> void:
 	print("Game: Peer connected: ", id)
-	# Server spawns the new player
-	if multiplayer.is_server():
-		_spawn_remote_player(id)
+	# Don't spawn players for clients - they spawn their own
+	# The server just needs to know about the connection
 
 func _on_peer_disconnected(id: int) -> void:
 	print("Game: Peer disconnected: ", id)
@@ -173,7 +175,7 @@ func _on_peer_disconnected(id: int) -> void:
 		print("Game: Player node not found for ID: ", id)
 
 func _setup_existing_player() -> void:
-	# Set up the existing player for multiplayer
+	# Set up the existing player for multiplayer (server only)
 	var existing_player = $Player
 	if existing_player:
 		existing_player.name = str(multiplayer.get_unique_id())
@@ -184,12 +186,13 @@ func _setup_existing_player() -> void:
 		print("Game: No existing player found!")
 
 func _spawn_local_player() -> void:
-	# This is called when we're the server/host
+	# This is called when we need to spawn our own player (server or client)
 	var player_scene = preload("res://Scenes/PlayerStuff/Player.tscn")
 	var player = player_scene.instantiate()
 	player.name = str(multiplayer.get_unique_id())
-	player.position = Vector2(100, 100)  # Spawn position
+	player.position = Vector2(100 + (multiplayer.get_unique_id() * 50), 100)  # Offset spawn positions
 	add_child(player)
+	print("Game: Spawned local player with ID: ", player.name, " at position: ", player.position)
 
 func _spawn_remote_player(peer_id: int) -> void:
 	# This is called by the server when a client connects

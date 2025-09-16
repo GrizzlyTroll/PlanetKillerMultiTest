@@ -7,13 +7,6 @@ res://Scenes/Enemies/zombie.tscn
 res://Scenes/PlayerStuff/Player.tscn
 res://Surprise/Scenes/high_level_example.tscn
 res://Surprise/Scenes/high_level_ui.tscn
-res://Scripts/MultiplayerTest.gd
-res://Scripts/PlayerScripts/player.gd
-res://Scripts/WorldScripts/game.gd
-res://Surprise/Scripts/highlevelnetworkhandler.gd
-res://Surprise/Scripts/high_level_ui.gd
-res://Scenes/MultiplayerTest.tscn
-res://Surprise/Scripts/high_level_multiplayer_spawner.gd
-res://Scripts/WorldScripts/title_screen.gd
-res://Scripts/Lobby.gd
 res://Scenes/Lobby.tscn
+res://Scripts/Lobby.gd
+res://Scripts/WorldScripts/game.gd

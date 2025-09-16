@@ -45,8 +45,6 @@ sources/0 = SubResource("TileSetAtlasSource_coyqo")
 [node name="HighLevelExample" type="Node2D"]
 
 [node name="HighLevelUI" parent="." instance=ExtResource("1_33ch3")]
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://cw8ndyn7x0jtw")

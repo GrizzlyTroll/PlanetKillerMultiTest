@@ -113,12 +113,14 @@ func _on_server_created():
 	}
 	_show_lobby_ui()
 	_update_lobby_ui()
+	print("Lobby: Server player added to list: ", players)
 
 func _on_server_joined():
 	print("Lobby: Joined server")
 	is_connected = true
 	# Request current player list from server
 	if not multiplayer.is_server():
+		print("Lobby: Requesting player list from server")
 		rpc_id(1, "_request_player_list")
 	_show_lobby_ui()
 
@@ -145,6 +147,7 @@ func _on_peer_connected(id: int):
 			"name": "Player " + str(id),
 			"ready": false
 		}
+		print("Lobby: Added new player to list: ", players)
 		_update_lobby_ui()
 		# Send updated player list to all clients
 		_sync_player_list()
@@ -172,9 +175,12 @@ func _on_ready_pressed():
 	# Send ready state to server
 	if multiplayer.is_server():
 		players[multiplayer.get_unique_id()]["ready"] = local_player_ready
+		print("Lobby: Server player ready state changed: ", local_player_ready)
 		_update_lobby_ui()
+		_sync_player_list()  # Sync the updated state to all clients
 		_check_all_ready()
 	else:
+		print("Lobby: Sending ready state to server: ", local_player_ready)
 		rpc_id(1, "_set_player_ready", local_player_ready)
 
 func _on_start_game_pressed():
@@ -236,7 +242,9 @@ func _check_all_ready() -> bool:
 
 func _sync_player_list():
 	# Send player list to all clients
+	print("Lobby: Syncing player list to all clients: ", players)
 	for peer_id in multiplayer.get_peers():
+		print("Lobby: Sending player list to peer: ", peer_id)
 		rpc_id(peer_id, "_receive_player_list", players)
 
 @rpc("any_peer", "reliable")
@@ -248,6 +256,7 @@ func _request_player_list():
 @rpc("any_peer", "reliable")
 func _receive_player_list(player_list: Dictionary):
 	# Client receives player list from server
+	print("Lobby: Received player list from server: ", player_list)
 	players = player_list
 	_update_lobby_ui()
 
@@ -256,9 +265,12 @@ func _set_player_ready(ready: bool):
 	# Server receives ready state from client
 	if multiplayer.is_server():
 		var sender_id = multiplayer.get_remote_sender_id()
+		print("Lobby: Received ready state from player ", sender_id, ": ", ready)
 		if sender_id in players:
 			players[sender_id]["ready"] = ready
+			print("Lobby: Updated player ready state: ", players)
 			_update_lobby_ui()
+			_sync_player_list()  # Sync the updated state to all clients
 			_check_all_ready()
 
 @rpc("any_peer", "reliable")
