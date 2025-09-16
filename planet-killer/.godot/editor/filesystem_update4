@@ -13,3 +13,4 @@ res://Scripts/WorldScripts/game.gd
 res://Scenes/world.tscn
 res://Scripts/WorldScripts/grass_script.gd
 res://Scripts/Lobby.gd
+res://Surprise/Scripts/high_level_multiplayer_spawner.gd

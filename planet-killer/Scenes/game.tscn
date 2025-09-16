@@ -445,6 +445,8 @@ script = ExtResource("1_qxrlw")
 mob_scene_east = ExtResource("24_vm72l")
 mob_scene_west = ExtResource("24_vm72l")
 
+[node name="Players" type="Node2D" parent="."]
+
 [node name="World" type="Node2D" parent="."]
 
 [node name="flowers" type="TileMapLayer" parent="World"]
@@ -669,7 +671,8 @@ rotation = -2.35619
 script = ExtResource("24_network")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MultiplayerNodes"]
-spawn_path = NodePath("../../Player")
+spawn_path = NodePath("../../Players")
+network_player = ExtResource("2_wrm1d")
 script = ExtResource("23_mg4q0")
 
 [connection signal="timeout" from="Enemies/MobTimer" to="." method="_on_mob_timer_timeout"]

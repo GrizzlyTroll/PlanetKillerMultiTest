@@ -124,7 +124,7 @@ func _on_mob_spwan_duration_timeout() -> void:
 # Multiplayer functions
 func _setup_multiplayer() -> void:
 	# Get MultiplayerSpawner reference
-	multiplayer_spawner = $MultiplayerSpawner
+	multiplayer_spawner = $MultiplayerNodes/MultiplayerSpawner
 	
 	# Set up multiplayer signals
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -132,8 +132,7 @@ func _setup_multiplayer() -> void:
 	
 	# Configure MultiplayerSpawner
 	if multiplayer_spawner:
-		multiplayer_spawner.spawn_function = _spawn_player
-		print("Game: MultiplayerSpawner configured")
+		print("Game: MultiplayerSpawner found and ready")
 	else:
 		print("Game: Warning - MultiplayerSpawner not found!")
 	
@@ -142,18 +141,6 @@ func _setup_multiplayer() -> void:
 		print("Game: Already in multiplayer session, spawning players")
 		_spawn_all_players()
 
-func _spawn_player(id: int) -> Node:
-	# Spawn function for MultiplayerSpawner
-	var player_scene = preload("res://Scenes/PlayerStuff/Player.tscn")
-	var player = player_scene.instantiate()
-	player.name = str(id)
-	player.set_multiplayer_authority(id)
-	
-	# Set position based on player ID
-	player.position = Vector2(100 + (id * 100), 100)
-	
-	print("Game: Spawning player with ID: ", id, " at position: ", player.position)
-	return player
 
 func _spawn_all_players():
 	# Spawn all connected players
@@ -161,10 +148,10 @@ func _spawn_all_players():
 		# Server spawns all players
 		print("Game: Server spawning all players")
 		# Spawn server player (ID 1)
-		multiplayer_spawner.spawn(1)
+		multiplayer_spawner.spawn_player(1)
 		# Spawn all client players
 		for peer_id in multiplayer.get_peers():
-			multiplayer_spawner.spawn(peer_id)
+			multiplayer_spawner.spawn_player(peer_id)
 	else:
 		# Client requests server to spawn all players
 		print("Game: Client requesting server to spawn all players")
@@ -205,7 +192,7 @@ func _on_peer_connected(id: int) -> void:
 	# Server spawns a player for the new client using MultiplayerSpawner
 	if multiplayer.is_server():
 		print("Game: Server spawning player for new client: ", id)
-		multiplayer_spawner.spawn(id)
+		multiplayer_spawner.spawn_player(id)
 
 func _on_peer_disconnected(id: int) -> void:
 	print("Game: Peer disconnected: ", id)
@@ -264,10 +251,10 @@ func _request_player_spawns():
 		# Use MultiplayerSpawner to spawn all players
 		print("Game: Server spawning all players for client using MultiplayerSpawner")
 		# Spawn server player (ID 1)
-		multiplayer_spawner.spawn(1)
+		multiplayer_spawner.spawn_player(1)
 		# Spawn all other connected players
 		for peer_id in multiplayer.get_peers():
-			multiplayer_spawner.spawn(peer_id)
+			multiplayer_spawner.spawn_player(peer_id)
 
 
 func is_multiplayer_active() -> bool:
