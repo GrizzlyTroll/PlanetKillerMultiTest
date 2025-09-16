@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://oovqj0nitxs8"]
+
+[ext_resource type="Texture2D" uid="uid://dm3l4234he5kv" path="res://Assets/Icons/Hotbar Icon.png" id="1_w22v5"]
+[ext_resource type="PackedScene" uid="uid://c7wihj3ksv3wh" path="res://Scenes/hotbar_slot.tscn" id="2_w22v5"]
+
+[node name="Hotbar" type="NinePatchRect"]
+offset_left = 409.0
+offset_top = 501.0
+offset_right = 1163.0
+offset_bottom = 1201.0
+scale = Vector2(0.5, 0.5)
+size_flags_stretch_ratio = 0.0
+texture = ExtResource("1_w22v5")
+
+[node name="Hotbar Icon Box" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 316.0
+offset_right = 644.0
+offset_bottom = 407.0
+alignment = 1
+
+[node name="HotbarSlot" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 60)
+layout_mode = 2
+action_mode = 0
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HotbarSlot2" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HotbarSlot3" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HotbarSlot4" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HotbarSlot5" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="HotbarSlot6" parent="Hotbar Icon Box" instance=ExtResource("2_w22v5")]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+expand_icon = true

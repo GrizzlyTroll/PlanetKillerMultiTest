@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bowmwla26h6ep"]
+
+[ext_resource type="Script" uid="uid://duc5qj6av86sc" path="res://Scripts/UI/Toast/simple_procedural_integration.gd" id="1_0x0x0"]
+
+[node name="SimpleProceduralTest" type="Node"]
+script = ExtResource("1_0x0x0")

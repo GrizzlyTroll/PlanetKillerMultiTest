@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxghd00b8jlml"]
+
+[ext_resource type="PackedScene" uid="uid://bq16b2c1nbuvf" path="res://Scenes/Testing Enviroment/water_spring.tscn" id="1_x3w45"]
+
+[node name="Water_Body" type="Node2D"]
+
+[node name="Water_Spring" parent="." instance=ExtResource("1_x3w45")]
+
+[node name="Water_Spring2" parent="." instance=ExtResource("1_x3w45")]
+position = Vector2(128, 0)
+
+[node name="Water_Spring3" parent="." instance=ExtResource("1_x3w45")]
+position = Vector2(254, 0)
+
+[node name="Water_Spring4" parent="." instance=ExtResource("1_x3w45")]
+position = Vector2(380, 0)
+
+[node name="Water_Spring5" parent="." instance=ExtResource("1_x3w45")]
+position = Vector2(508, 0)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4eh1plbrqgrr"]
+
+[ext_resource type="PackedScene" uid="uid://cvjgj6lw4cg75" path="res://Scenes/PlayerStuff/heart.tscn" id="1_jgl13"]
+[ext_resource type="Script" uid="uid://coc4vkdx5hjr6" path="res://Scripts/PlayerScripts/health_bar_ui.gd" id="1_rknpb"]
+
+[node name="HealthBarUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 83.0
+offset_bottom = 20.0
+script = ExtResource("1_rknpb")
+
+[node name="HeartContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 174.0
+offset_bottom = 38.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Heart" parent="HeartContainer" instance=ExtResource("1_jgl13")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+
+[node name="Heart2" parent="HeartContainer" instance=ExtResource("1_jgl13")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+
+[node name="Heart3" parent="HeartContainer" instance=ExtResource("1_jgl13")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+
+[node name="Heart4" parent="HeartContainer" instance=ExtResource("1_jgl13")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+
+[node name="Heart5" parent="HeartContainer" instance=ExtResource("1_jgl13")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2

@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://dskpmwghh0gh2"]
+
+[ext_resource type="Texture2D" uid="uid://bfgqogk736bq1" path="res://Assets/Weapons/Shuriken.png" id="1_7e8r0"]
+[ext_resource type="Script" uid="uid://k7qgq3n4kgpx" path="res://Scenes/Equipment/shuriken.gd" id="1_fa0r0"]
+[ext_resource type="Script" uid="uid://cmyfpjincrkvr" path="res://Scenes/components/hitbox.gd" id="2_fa0r0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xce0f"]
+atlas = ExtResource("1_7e8r0")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_me7my"]
+atlas = ExtResource("1_7e8r0")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70kvu"]
+atlas = ExtResource("1_7e8r0")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_frsd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xce0f")
+}],
+"loop": true,
+"name": &"Held",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me7my")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70kvu")
+}],
+"loop": true,
+"name": &"Throwin",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_madqs"]
+radius = 4.0
+
+[node name="RigidBody2D" type="RigidBody2D"]
+mass = 0.15
+script = ExtResource("1_fa0r0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_frsd4")
+animation = &"Held"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_madqs")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("2_fa0r0")
+metadata/_custom_type_script = "uid://cmyfpjincrkvr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_madqs")

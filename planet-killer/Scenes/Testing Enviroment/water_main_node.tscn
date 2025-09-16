@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2hhlrx2gnscg"]
+
+[ext_resource type="PackedScene" uid="uid://dxghd00b8jlml" path="res://Scenes/Testing Enviroment/water_body.tscn" id="1_loj5n"]
+[ext_resource type="Script" uid="uid://ckl81wk7ipujy" path="res://Scenes/Testing Enviroment/water_body.gd" id="2_ofxmj"]
+
+[node name="Water_main_node" type="Node2D"]
+
+[node name="Water_Body" parent="." instance=ExtResource("1_loj5n")]
+script = ExtResource("2_ofxmj")

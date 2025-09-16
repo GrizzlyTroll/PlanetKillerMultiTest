@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://doc87prp382yx"]
+
+[ext_resource type="Script" uid="uid://dsqptock0p35n" path="res://Scripts/WorldScripts/procedural_world/procedural_world_main.gd" id="1_abc123"]
+
+[node name="ProceduralTest" type="Node2D"]
+script = ExtResource("1_abc123")

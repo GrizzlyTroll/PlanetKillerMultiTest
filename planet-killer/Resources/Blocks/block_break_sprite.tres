@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BlockData" load_steps=2 format=3 uid="uid://cd5fm7nk4b2m4"]
+
+[ext_resource type="Script" uid="uid://dkar4sm7etsiv" path="res://Scripts/BreakingScripts/BlockData.gd" id="1_tvlm3"]
+
+[resource]
+script = ExtResource("1_tvlm3")
+tile_name = "block_break_sprite"
+health = 4
+atlas_coords = Array[Vector2i]([Vector2i(1, 1), Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1)])
+source_id = 0
+metadata/_custom_type_script = "uid://dkar4sm7etsiv"

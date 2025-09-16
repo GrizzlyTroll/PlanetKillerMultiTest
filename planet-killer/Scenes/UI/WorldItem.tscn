@@ -1,0 +1,112 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj0m22vyxae8m"]
+
+[ext_resource type="Script" uid="uid://3txnc8kyhryl" path="res://Scripts/UI/world_item.gd" id="1_world_item"]
+[ext_resource type="Theme" uid="uid://b482uksqacwcy" path="res://Scenes/components/game_theme.tres" id="2_theme"]
+
+[node name="WorldItem" type="Control"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_world_item")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="IconContainer" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="WorldIcon" type="TextureRect" parent="HBoxContainer/IconContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ContentContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 3
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/ContentContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "World Name"
+vertical_alignment = 1
+
+[node name="DetailsLabel" type="Label" parent="HBoxContainer/ContentContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Last saved: Never"
+vertical_alignment = 1
+
+[node name="PlayTimeLabel" type="Label" parent="HBoxContainer/ContentContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Play time: 0m"
+vertical_alignment = 1
+
+[node name="SeedLabel" type="Label" parent="HBoxContainer/ContentContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Seed: 0"
+vertical_alignment = 1
+
+[node name="StatusContainer" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/StatusContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="HBoxContainer/StatusContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Play"
+
+[node name="DeleteButton" type="Button" parent="HBoxContainer/StatusContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"

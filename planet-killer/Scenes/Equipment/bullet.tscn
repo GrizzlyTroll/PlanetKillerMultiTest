@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bonoerchg64sd"]
+
+[ext_resource type="Script" uid="uid://csikbo0fvrcr4" path="res://Scripts/Weapon Scripts/bullet.gd" id="1_auujj"]
+[ext_resource type="Script" uid="uid://cmyfpjincrkvr" path="res://Scenes/components/hitbox.gd" id="1_im1ht"]
+[ext_resource type="Texture2D" uid="uid://b1w7lx7rgydpk" path="res://Assets/Weapons/bullet.png" id="2_auujj"]
+[ext_resource type="AudioStream" uid="uid://cdwpy1whnlffv" path="res://Sounds/silenced_pistol_sound_effect.wav" id="4_f0h8r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f0h8r"]
+radius = 1.0
+
+[node name="Bullet" type="Area2D"]
+top_level = true
+rotation = 0.00327605
+script = ExtResource("1_auujj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_f0h8r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.99999, 0.00655186)
+rotation = -0.00392312
+scale = Vector2(1.83774, 1.75126)
+texture = ExtResource("2_auujj")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("1_im1ht")
+damage = 5
+metadata/_custom_type_script = "uid://cmyfpjincrkvr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_f0h8r")
+
+[node name="BulletNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_f0h8r")
+volume_db = -10.0
+pitch_scale = 0.81
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

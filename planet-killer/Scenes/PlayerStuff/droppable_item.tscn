@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c436dqvwq1vsu"]
+
+[ext_resource type="Script" uid="uid://cmi3yb1b7xh2u" path="res://Scripts/droppable_item.gd" id="1_vxn76"]
+
+[node name="DroppableItem" type="Area2D"]
+script = ExtResource("1_vxn76")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxjvrga2klhvn"]
+
+[ext_resource type="Script" uid="uid://csikbo0fvrcr4" path="res://Scripts/Weapon Scripts/bullet.gd" id="1_huq5e"]
+[ext_resource type="Texture2D" uid="uid://m1oppq7yytba" path="res://Assets/Weapons/WEAPONS.png" id="2_huq5e"]
+[ext_resource type="Script" uid="uid://cmyfpjincrkvr" path="res://Scenes/components/hitbox.gd" id="3_p8fyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huq5e"]
+size = Vector2(9.99995, 11.9999)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blvi2"]
+atlas = ExtResource("2_huq5e")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p8fyh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blvi2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Bullet" type="Area2D"]
+top_level = true
+rotation = 0.00327605
+script = ExtResource("1_huq5e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.00327, 0.996718)
+shape = SubResource("RectangleShape2D_huq5e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p8fyh")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("3_p8fyh")
+damage = 5
+metadata/_custom_type_script = "uid://cmyfpjincrkvr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(1.00327, 0.996718)
+shape = SubResource("RectangleShape2D_huq5e")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

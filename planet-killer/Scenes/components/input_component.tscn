@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dicbkbifrpgwv"]
+
+[ext_resource type="Script" uid="uid://de1m6fvpv21n4" path="res://Scenes/components/input_component.gd" id="1_iajo6"]
+
+[node name="InputComponent" type="Node"]
+script = ExtResource("1_iajo6")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

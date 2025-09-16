@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cgan3uvg81icq"]
+
+[ext_resource type="Resource" uid="uid://cexu3gnps2vy1" path="res://inventory/items/Dirt.tres" id="2_d2l4n"]
+[ext_resource type="Resource" uid="uid://dqu73b8p0eyho" path="res://Assets/items/HealthPotion.tres" id="3_d2l4n"]
+[ext_resource type="Script" uid="uid://bwooswqs3emt6" path="res://inventory/inventory.gd" id="3_p4buj"]
+
+[resource]
+script = ExtResource("3_p4buj")
+items = Array[Resource]([null, null, null, ExtResource("2_d2l4n"), ExtResource("3_d2l4n"), null, null, null, null, null])
+metadata/_custom_type_script = "uid://bwooswqs3emt6"

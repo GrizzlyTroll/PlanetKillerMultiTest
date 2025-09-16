@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4b6pyfw40vh2"]
+
+[ext_resource type="Script" path="res://Scenes/day_night_test.gd" id="1_test"]
+
+[node name="DayNightTest" type="Node2D"]
+script = ExtResource("1_test")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 400.0
+offset_bottom = -20.0
+text = "Day/Night Cycle Test
+
+Controls:
+- Spacebar: Toggle dial visibility
+- Left/Right arrows: Jump to time periods
+- Up/Down arrows: Change time speed
+- Click dial: Set time directly
+
+Time: 0.0 = Sunrise, 0.5 = Sunset, 1.0 = Next sunrise"

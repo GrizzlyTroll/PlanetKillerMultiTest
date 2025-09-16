@@ -1,0 +1,39 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://b482uksqacwcy"]
+
+[ext_resource type="FontFile" uid="uid://dgdd6b4kpxuaj" path="res://Assets/UI/Fonts/minecraft.ttf" id="1_vmg2h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
+bg_color = Color(0.182419, 0.0441304, 0.192746, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.903748, 0.868189, 0.822119, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.4, 0.002, 0.7, 1)
+
+[resource]
+default_base_scale = 0.59
+default_font = ExtResource("1_vmg2h")
+default_font_size = 23
+Button/styles/disabled = SubResource("StyleBoxFlat_3")
+Button/styles/hover = SubResource("StyleBoxFlat_1")
+Button/styles/normal = SubResource("StyleBoxFlat_4")
+Button/styles/pressed = SubResource("StyleBoxFlat_2")
+CheckBox/styles/disabled = SubResource("StyleBoxFlat_3")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_1")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_4")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_2")
+HSlider/styles/grabber = SubResource("StyleBoxFlat_2")
+HSlider/styles/grabber_highlight = SubResource("StyleBoxFlat_1")
+HSlider/styles/slider = SubResource("StyleBoxFlat_1")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_3")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_1")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_4")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_2")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_3")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_2")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_1")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_4")

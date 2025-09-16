@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxo01aa4m5o6r"]
+
+[ext_resource type="Script" path="res://Scenes/components/retrograde_dial_component.gd" id="1_dial"]
+
+[node name="RetrogradeDialComponent" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dial")

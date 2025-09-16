@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://djixki04858m3"]
+
+[ext_resource type="Script" uid="uid://rj40deqcj3h1" path="res://inventory/inventory_item.gd" id="1_i3pay"]
+[ext_resource type="Texture2D" uid="uid://bbgbelysc4tjr" path="res://Assets/ItemsEQ/Potions/SpeedPotionSmall.png" id="2_i3pay"]
+
+[resource]
+script = ExtResource("1_i3pay")
+name = ""
+texture = ExtResource("2_i3pay")
+metadata/_custom_type_script = "uid://rj40deqcj3h1"

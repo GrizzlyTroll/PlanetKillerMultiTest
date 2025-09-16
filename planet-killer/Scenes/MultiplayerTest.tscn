@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8x70a02a1b3c"]
+
+[ext_resource type="PackedScene" uid="uid://devfcw0o6bxon" path="res://Surprise/Scenes/high_level_ui.tscn" id="1_ui"]
+[ext_resource type="PackedScene" uid="uid://7uwgbujcd4m6" path="res://Scenes/game.tscn" id="2_game"]
+[ext_resource type="Script" uid="uid://btpe2uyhw5j6i" path="res://Scripts/MultiplayerTest.gd" id="3_script"]
+
+[node name="MultiplayerTest" type="Node2D"]
+script = ExtResource("3_script")
+
+[node name="HighLevelUI" parent="." instance=ExtResource("1_ui")]
+
+[node name="Game" parent="." instance=ExtResource("2_game")]
+visible = false
+
+[node name="TestInstructions" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 100.0
+text = "Multiplayer Test Instructions:
+1. Click 'Host Server' to create a server
+2. On another instance, click 'Refresh' to find servers
+3. Select a server and click 'Join Server'
+4. Or use 'Direct Connect' with IP: 127.0.0.1"

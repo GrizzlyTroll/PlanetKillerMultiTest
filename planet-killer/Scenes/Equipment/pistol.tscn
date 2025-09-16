@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtxnojn5kaots"]
+
+[ext_resource type="Texture2D" uid="uid://67kknjnhjbpb" path="res://Assets/Weapons/Pistol.png" id="1_pj6m4"]
+[ext_resource type="Script" uid="uid://bjjxgtd51hqq7" path="res://Scenes/Equipment/pistol.gd" id="1_taeji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_taeji"]
+size = Vector2(6, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grj7y"]
+atlas = ExtResource("1_pj6m4")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fs8ft"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grj7y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Guns" type="Area2D"]
+script = ExtResource("1_taeji")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9, -2)
+shape = SubResource("RectangleShape2D_taeji")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(8, -2)
+sprite_frames = SubResource("SpriteFrames_fs8ft")
+
+[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/AnimatedSprite2D"]
+unique_name_in_owner = true
+position = Vector2(4, -1)

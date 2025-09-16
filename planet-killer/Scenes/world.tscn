@@ -1,0 +1,142 @@
+[gd_scene load_steps=21 format=3 uid="uid://g4a4m5505ifb"]
+
+[ext_resource type="Script" uid="uid://bl07hsu8x2nic" path="res://Scenes/world.gd" id="1_o06y3"]
+[ext_resource type="Script" uid="uid://dkar4sm7etsiv" path="res://Scripts/BreakingScripts/BlockData.gd" id="2_7yui6"]
+[ext_resource type="Resource" uid="uid://cd5fm7nk4b2m4" path="res://Resources/Blocks/block_break_sprite.tres" id="3_c5t2i"]
+[ext_resource type="Texture2D" uid="uid://b1hinvvmk1q7s" path="res://Assets/Tileset/AncientTileSets/GrassLayer.png" id="3_ikia7"]
+[ext_resource type="Script" uid="uid://cvh4nm6r3cone" path="res://Scripts/WorldScripts/grass_script.gd" id="4_c5t2i"]
+[ext_resource type="Texture2D" uid="uid://b3i6jly3t5r2d" path="res://Assets/Tileset/Surface/GrassTop.png" id="5_7yui6"]
+[ext_resource type="Texture2D" uid="uid://c612coefs7gbv" path="res://Scripts/BreakingScripts/BlockBreak.png" id="8_5v1tr"]
+[ext_resource type="Texture2D" uid="uid://ddsj2ifo56ht0" path="res://Assets/Tileset/AncientTileSets/darkdirtblocks.png" id="8_hgpy0"]
+[ext_resource type="Script" uid="uid://b0oko30kaiws" path="res://Scenes/ground.gd" id="9_0fj1v"]
+[ext_resource type="Texture2D" uid="uid://vn8qj36xprn1" path="res://Assets/Tileset/AncientTileSets/Stones.png" id="9_c5t2i"]
+[ext_resource type="Script" uid="uid://cqvchtrc5uovx" path="res://Scripts/WorldScripts/dirt_script.gd" id="13_c5t2i"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o06y3"]
+texture = ExtResource("3_ikia7")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c5t2i"]
+texture = ExtResource("5_7yui6")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_yq1aw"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 9
+physics_layer_0/collision_mask = 0
+sources/1 = SubResource("TileSetAtlasSource_o06y3")
+sources/2 = SubResource("TileSetAtlasSource_c5t2i")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wowpa"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hmc15"]
+texture = ExtResource("8_hgpy0")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e0ngr"]
+texture = ExtResource("9_c5t2i")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSet" id="TileSet_1vso6"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 9
+physics_layer_0/collision_mask = 9
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_wowpa")
+sources/3 = SubResource("TileSetAtlasSource_hmc15")
+sources/4 = SubResource("TileSetAtlasSource_e0ngr")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ikia7"]
+texture = ExtResource("8_5v1tr")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:0/0/custom_data_0 = &"block_break_sprite"
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:0/0/custom_data_0 = &"block_break_sprite"
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:1/0/custom_data_0 = &"block_break_sprite"
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:1/0/custom_data_0 = &"block_break_sprite"
+
+[sub_resource type="TileSet" id="TileSet_7yui6"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "tile_name"
+custom_data_layer_0/type = 21
+sources/0 = SubResource("TileSetAtlasSource_ikia7")
+
+[node name="WorldBuilder" type="Node2D"]
+script = ExtResource("1_o06y3")
+block = Dictionary[String, ExtResource("2_7yui6")]({
+"block_break_sprite": ExtResource("3_c5t2i")
+})
+
+[node name="Grass" type="TileMapLayer" parent="."]
+position = Vector2(0, 23)
+tile_set = SubResource("TileSet_yq1aw")
+script = ExtResource("4_c5t2i")
+
+[node name="Dirt" type="TileMapLayer" parent="."]
+position = Vector2(0, 23)
+tile_set = SubResource("TileSet_1vso6")
+script = ExtResource("13_c5t2i")
+
+[node name="Ground" type="TileMapLayer" parent="."]
+position = Vector2(0, 23)
+tile_set = SubResource("TileSet_7yui6")
+script = ExtResource("9_0fj1v")

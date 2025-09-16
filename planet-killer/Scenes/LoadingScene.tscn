@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqx8n7k2m3p4v"]
+
+[ext_resource type="Script" uid="uid://ds0wgy8bf7gtp" path="res://Scripts/UI/LoadingScene.gd" id="1_loading"]
+[ext_resource type="Theme" uid="uid://b482uksqacwcy" path="res://Scenes/components/game_theme.tres" id="2_theme"]
+
+[node name="LoadingScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_loading")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.1, 1)
+
+[node name="BackgroundPattern" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.15, 0.3)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "PLANET KILLER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generating World..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Initializing..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+layout_mode = 2
+value = 0.0
+
+[node name="DetailsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Preparing world generation..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChunkInfo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Chunks: 0/1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BlockInfo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Blocks: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TipLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Tip: Use WASD to move and SPACE to jump"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
