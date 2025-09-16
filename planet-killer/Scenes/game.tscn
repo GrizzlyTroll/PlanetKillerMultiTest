@@ -672,7 +672,6 @@ script = ExtResource("24_network")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MultiplayerNodes"]
 spawn_path = NodePath("../../Players")
-network_player = ExtResource("2_wrm1d")
 script = ExtResource("23_mg4q0")
 
 [connection signal="timeout" from="Enemies/MobTimer" to="." method="_on_mob_timer_timeout"]

@@ -50,6 +50,7 @@ func _ready():
 	network_handler.servers_updated.connect(_on_servers_updated)
 	
 	
+	
 	# Connect UI signals with null checks
 	if ready_button:
 		ready_button.pressed.connect(_on_ready_pressed)
