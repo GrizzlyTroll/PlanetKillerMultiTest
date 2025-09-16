@@ -204,6 +204,8 @@ func _setup_existing_player() -> void:
 	var existing_player = $Player
 	if existing_player:
 		existing_player.name = str(multiplayer.get_unique_id())
+		# Add color modulation to distinguish players
+		_set_player_color(existing_player, multiplayer.get_unique_id())
 		print("Game: Set up existing player with ID: ", existing_player.name)
 		print("Game: Player multiplayer authority: ", existing_player.get_multiplayer_authority())
 		print("Game: Local multiplayer ID: ", multiplayer.get_unique_id())
@@ -215,8 +217,12 @@ func _spawn_local_player() -> void:
 	var player_scene = preload("res://Scenes/PlayerStuff/Player.tscn")
 	var player = player_scene.instantiate()
 	player.name = str(multiplayer.get_unique_id())
-	player.position = Vector2(100 + (multiplayer.get_unique_id() * 50), 100)  # Offset spawn positions
+	player.position = Vector2(100 + (multiplayer.get_unique_id() * 100), 100)  # Increased spacing
 	add_child(player)
+	
+	# Add color modulation to distinguish players
+	_set_player_color(player, multiplayer.get_unique_id())
+	
 	print("Game: Spawned local player with ID: ", player.name, " at position: ", player.position)
 	print("Game: Player multiplayer authority: ", player.get_multiplayer_authority())
 	print("Game: Local multiplayer ID: ", multiplayer.get_unique_id())
@@ -228,15 +234,21 @@ func _spawn_remote_player(peer_id: int) -> void:
 	var player_scene = preload("res://Scenes/PlayerStuff/Player.tscn")
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
-	player.position = Vector2(100 + (peer_id * 50), 100)  # Offset spawn positions
+	player.position = Vector2(100 + (peer_id * 100), 100)  # Increased spacing
 	add_child(player)
+	
+	# Add color modulation to distinguish players
+	_set_player_color(player, peer_id)
+	
 	print("Game: Server spawned player for peer: ", peer_id)
+	print("Game: Server player authority: ", player.get_multiplayer_authority())
+	print("Game: Server local ID: ", multiplayer.get_unique_id())
 
 func _spawn_player_for_all_clients(peer_id: int) -> void:
 	# Spawn the new player on all existing clients
 	for client_id in multiplayer.get_peers():
 		if client_id != peer_id:  # Don't send to the new client (they'll get it via _request_player_spawns)
-			rpc_id(client_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 50), 100))
+			rpc_id(client_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 100), 100))
 
 @rpc("any_peer", "reliable")
 func _request_player_spawns():
@@ -248,10 +260,14 @@ func _request_player_spawns():
 		# Spawn all existing players for the requesting client
 		for peer_id in multiplayer.get_peers():
 			if peer_id != sender_id:  # Don't spawn the requesting client's player
-				rpc_id(sender_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 50), 100))
+				rpc_id(sender_id, "_spawn_player_instance", peer_id, Vector2(100 + (peer_id * 100), 100))
 		
 		# Spawn the requesting client's player for all other clients
 		_spawn_player_for_all_clients(sender_id)
+		
+		# Debug: Check authorities after spawning
+		await get_tree().process_frame
+		debug_player_authorities()
 
 @rpc("any_peer", "reliable")
 func _spawn_player_instance(peer_id: int, position: Vector2):
@@ -262,7 +278,18 @@ func _spawn_player_instance(peer_id: int, position: Vector2):
 		player.name = str(peer_id)
 		player.position = position
 		add_child(player)
+		
+		# Add color modulation to distinguish players
+		_set_player_color(player, peer_id)
+		
 		print("Game: Client spawned player instance for peer: ", peer_id, " at position: ", position)
+		print("Game: Player authority after spawn: ", player.get_multiplayer_authority())
+		print("Game: Local multiplayer ID: ", multiplayer.get_unique_id())
+		print("Game: Should this player have authority? ", (peer_id == multiplayer.get_unique_id()))
+		
+		# Debug: Check authorities after spawning
+		await get_tree().process_frame
+		debug_player_authorities()
 
 func is_multiplayer_active() -> bool:
 	return multiplayer.multiplayer_peer != null
@@ -271,6 +298,37 @@ func get_player_count() -> int:
 	if is_multiplayer_active():
 		return multiplayer.get_peers().size() + 1  # +1 for server
 	return 1
+
+func _set_player_color(player: Node, peer_id: int):
+	# Set a unique color for each player to distinguish them
+	var colors = [
+		Color.WHITE,      # Player 1 (server) - default white
+		Color.RED,        # Player 2 - red
+		Color.BLUE,       # Player 3 - blue
+		Color.GREEN,      # Player 4 - green
+		Color.YELLOW,     # Player 5 - yellow
+		Color.MAGENTA,    # Player 6 - magenta
+		Color.CYAN,       # Player 7 - cyan
+		Color.ORANGE      # Player 8 - orange
+	]
+	
+	var color_index = (peer_id - 1) % colors.size()
+	var sprite = player.get_node("AnimatedSprite2D")
+	if sprite:
+		sprite.modulate = colors[color_index]
+		print("Game: Set player ", peer_id, " color to: ", colors[color_index])
+
+func debug_player_authorities():
+	# Debug function to check all player authorities
+	print("=== PLAYER AUTHORITY DEBUG ===")
+	print("Local multiplayer ID: ", multiplayer.get_unique_id())
+	print("Is server: ", multiplayer.is_server())
+	print("Is client: ", multiplayer.is_client())
+	
+	for child in get_children():
+		if child.name.is_valid_int():
+			print("Player ", child.name, " - Authority: ", child.get_multiplayer_authority(), " - Should have authority: ", (child.name.to_int() == multiplayer.get_unique_id()))
+	print("=== END DEBUG ===")
 
 # Mob timer synchronization
 func _sync_mob_timers() -> void:
